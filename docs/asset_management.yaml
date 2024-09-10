@@ -1,0 +1,73 @@
+
+openapi: 3.0.0
+info:
+  title: Asset Management Service
+  version: 1.0.0
+paths:
+  /assets:
+    get:
+      summary: List all assets
+      responses:
+        '200':
+          description: A list of assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Asset'
+    post:
+      summary: Upload a new asset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Asset'
+      responses:
+        '201':
+          description: Asset uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+  /assets/{assetId}:
+    get:
+      summary: Get an asset by ID
+      parameters:
+        - name: assetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An asset object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Asset'
+    delete:
+      summary: Delete an asset by ID
+      parameters:
+        - name: assetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Asset deleted
+components:
+  schemas:
+    Asset:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+        projectId:
+          type: string
